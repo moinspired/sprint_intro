@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
 @Controller
+
 public class HomeController {
 	Date date = new Date();
 	
