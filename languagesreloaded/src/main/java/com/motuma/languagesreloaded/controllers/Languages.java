@@ -44,7 +44,30 @@ public class Languages {
     	Language lang = languageService.getLanguage(id);
     	model.addAttribute("id", id);
     	model.addAttribute("language", lang);
-    	System.out.println(lang);
 		return "show.jsp";
+	}
+	
+	@RequestMapping("/languages/edit/{id}")
+	public String editLanguage(@PathVariable("id") Long id, Model model) {
+		Language lang = languageService.getLanguage(id);
+		model.addAttribute("id", id);
+		model.addAttribute("language", lang);
+		return "edit.jsp";
+	}
+	@PostMapping("/languages/update/{id}")
+	public String updateLanguage(@Valid @ModelAttribute("language") Language language, BindingResult result, @PathVariable("id") Long id) {
+        System.out.println("in language update");
+		if (result.hasErrors()) {
+    		return "edit.jsp";
+        }else{
+        	languageService.updateLanguage(language);
+            return "redirect:/";
+        }
+	}
+	
+	@RequestMapping("/languages/delete/{id}")
+	public String detelet(@PathVariable("id") Long id) {
+		languageService.deleteLanguage(id);
+		return "redirect:/";
 	}
 }

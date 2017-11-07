@@ -25,4 +25,10 @@ public class LanguageService {
 	public Language getLanguage(Long id) {
 		return languageRepo.findOne(id);
 	}
+	public void updateLanguage(Language language) {
+		languageRepo.save(language);
+	}
+	public void deleteLanguage(Long id) {
+		languageRepo.delete(id);
+	}
 }
