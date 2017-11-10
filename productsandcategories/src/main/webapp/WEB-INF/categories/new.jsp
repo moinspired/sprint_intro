@@ -7,29 +7,17 @@
 <html>
 <head>
  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
- 
 </head>
 <body>
 	<div class="container">
-		<h1>New Product</h1>
+		<h1>New Category</h1>
 		<p>
-			<form:form method="POST" action="/products/new" modelAttribute="product">
+			<form:form method="POST" action="/categories/new" modelAttribute="category">
 				<p> 
-			    <form:label path="name">Name:
-			    <form:input  class="form-control" path="name"/></form:label>
+				    <form:label path="name">Name:
+				    <form:input  class="form-control" path="name"/></form:label>
 			    </p>
-			     
-			    <p> 
-			    <form:label path="description">Description:
-			    <form:textarea class="form-control" path="description"></form:textarea></form:label>
-			    </p>
-			    
-			    
-			    <p>
-			    <form:label path="price">Price:
-			    <form:input class="form-control" path="price"/></form:label>
-			    </p>
-			    
+			    			    
 			    <input class="btn btn-default" type="submit" value="Create"/>
 			</form:form>
 		</p>
