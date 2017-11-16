@@ -9,11 +9,19 @@
 <title>Welcome Page</title>
 </head>
 <body>
-    <h1>Welcome Page <c:out value="${currentUser.username}"></c:out></h1>
-    
-    <form id="logoutForm" method="POST" action="/logout">
+	<form id="logoutForm" method="POST" action="/logout">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <input type="submit" value="Logout!" />
     </form>
+    <h1>Welcome Page <c:out value="${currentUser.firstName}"></c:out></h1>
+  	
+  	  <div>
+    	<p>First Name <c:out value="${currentUser.firstName}"></c:out></p>
+    	<p>Last Name <c:out value="${currentUser.lastName}"></c:out></p>
+    	<p>Email <c:out value="${currentUser.username}"></c:out></p>
+    	<p>Sign up date <c:out value="${currentUser.createdAt}"></c:out></p>
+    	<p>Last Sign in <c:out value="${currentUser.updatedAt}"></c:out></p>
+    </div>
+    
 </body>
 </html>

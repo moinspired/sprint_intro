@@ -9,9 +9,8 @@
 <title>Registration Page</title>
 </head>
 <body>
-
 	<c:if test="${logoutMessage != null}">
-        <c:out value="${logoutMessage}"></c:out>
+    <c:out value="${logoutMessage}"></c:out>
     </c:if>
     <h1>Login</h1>
     <c:if test="${errorMessage != null}">
@@ -29,15 +28,23 @@
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <input type="submit" value="Login!"/>
     </form>
-    
+	
     <h1>Register!</h1>
     
     <p><form:errors path="user.*"/></p>
     
     <form:form method="POST" action="/registration" modelAttribute="user">
         <p>
-            <form:label path="username">Username:</form:label>
+            <form:label path="username">Email:</form:label>
             <form:input path="username"/>
+        </p>
+        <p>
+            <form:label path="firstName">First Name:</form:label>
+            <form:input path="firstName"/>
+        </p>
+        <p>
+            <form:label path="lastName">Last Name:</form:label>
+            <form:input path="lastName"/>
         </p>
         <p>
             <form:label path="password">Password:</form:label>
