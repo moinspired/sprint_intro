@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.motuma.driverslicense.models.Dojo;
 import com.motuma.driverslicense.repositories.DojoRepository;
-
+import com.motuma.driverslicense.repositories.*;
 @Service
 public class DojoService {
 	private DojoRepository dojoRepo;

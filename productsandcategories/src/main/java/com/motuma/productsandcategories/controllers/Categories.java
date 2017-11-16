@@ -53,6 +53,7 @@ public class Categories {
 	
 	@RequestMapping("/categories/{id}/addProduct")
 	public String addProduct(@PathVariable("id") Long id, @RequestParam("product_id") Long product_id, Model model) {
+		System.out.println(product_id);
 		Category category = categoryService.getCategory(id);
 		List<Product> products = category.getProducts();
 		products.add(productService.getProduct(product_id));

@@ -1,6 +1,9 @@
 package com.motuma.ninjagold.controllers;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Random;
 
 import javax.servlet.http.HttpSession;
@@ -8,54 +11,70 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class Main {
-	public Random random = new Random();
-	private String res;
-	
-	
-	@RequestMapping("/gold")
-	public String index(HttpSession session) {
-		if(session.getAttribute("gold") == null)
+
+	@RequestMapping("/")
+	public String index(HttpSession session, Model model) {
+		Integer gold = (Integer) session.getAttribute("gold");
+		String messages =  (String) session.getAttribute("messages");
+		
+		System.out.println(messages);
+		if(gold == null) {
 			session.setAttribute("gold", 0);
-		if (session.getAttribute("activities") == null)
-			session.setAttribute("activities", new ArrayList<String>());
+		}
+		if(messages == null) {
+			session.setAttribute("messages", new ArrayList<String>());
+		}
+		model.addAttribute("GoldVal", gold);
+		model.addAttribute("messages", messages);
+		
 		return "index.jsp";
 	}
-
-	@PostMapping("/process")
-	public String process(	@RequestBody() String body, Model model, HttpSession session) {
-		
-		System.out.println(body);
-		
-		body  = body.substring(0, body.indexOf("="));
-		int result = 0;
-		res = "You entered a ";
-		switch(body) {
-			case "farm":
-				result = random.nextInt(10) +  10;
-				break;
-			case "cave":
-				result = random.nextInt(5) +  5;
-				break;
-			case "house":
-				result = random.nextInt(3) +  2;
-				break;
-			case "casino":
-				result = random.nextInt(50);
-				result = random.nextInt(2) + 1 == 1? result : -result;
-				break;
-			}
-		res += body + " and earened " + result + "gold.";
-		session.setAttribute("gold", (int)session.getAttribute("gold") + result);
-		ArrayList<String> activities = (ArrayList<String>) session.getAttribute("activities");
-		activities.add(res);
-		session.setAttribute("activities", activities);
 	
-		return "redirect:/gold";
+	@PostMapping("/process")
+	public String process(@RequestParam("building") String building, HttpSession session, Model model) {
+		Integer gold = (Integer) session.getAttribute("gold");
+		String messages = "";
+		Integer goldedEared = 0;
+		Random rand = new Random();
+		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm a");
+		Date date = new Date();
 		
+		int totalGold = 0;
+		if(building.equals("farm")) {
+			goldedEared = rand.nextInt((20-10) + 1 ) + 10;
+			totalGold = gold +  goldedEared;
+			session.setAttribute("gold", totalGold); 
+		}
+		else if(building.equals("cave")) {
+			goldedEared =  rand.nextInt((10-5) + 1 ) + 5;
+			totalGold = gold + goldedEared;
+			session.setAttribute("gold", totalGold); 
+		}
+		else if(building.equals("house")) {
+			goldedEared = rand.nextInt((5-2) + 1 ) + 2;
+			totalGold = gold +  goldedEared;
+			session.setAttribute("gold", totalGold); 
+		}
+		
+		else if(building.equals("casino")) {
+			if(gold < 0) {
+				
+			}else {
+				goldedEared = rand.nextInt((50+50) + 1 ) -50;
+				totalGold = gold +  goldedEared;
+				session.setAttribute("gold", totalGold); 
+			}
+
+		}
+		
+		messages = "You entered a " + building + " and earned " + goldedEared + " gold." + dateFormat.format(date)+ "\n";
+		messages = session.getAttribute("messages") + messages;
+		session.setAttribute("messages", messages);
+		return "redirect:/";
 	}
 }
