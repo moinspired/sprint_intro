@@ -21,11 +21,9 @@ import com.motuma.admindashboard.validator.UserValidator;
 @Controller
 public class Users {
     private UserService userService;
-    
-    // NEW
+
     private UserValidator userValidator;
-    
-    // NEW
+
     public Users(UserService userService, UserValidator userValidator) {
         this.userService = userService;
         this.userValidator = userValidator;
@@ -41,7 +39,7 @@ public class Users {
 	        // NEW
 	        userValidator.validate(user, result);
 	        if (result.hasErrors()) {
-	            return "loginPage.jsp";
+	        	return "redirect:/login";
 	        }
 	        if(userService.getUsers().isEmpty()) {
 	        	userService.saveUserWithAdminRole(user);
